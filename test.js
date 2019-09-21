@@ -1,4 +1,5 @@
 import test from "ava";
+import s from "sinon";
 import { Client } from "discord.js";
 import HelperBot from "./index";
 
@@ -23,75 +24,96 @@ test("use pushes middleware into the middlewares array", t => {
 });
 
 test("calling bot.message calls the message method on each middleware", t => {
-  let calledFirst = false;
-  let calledSecond = false;
+  const m1 = s.fake();
+  const m2 = s.fake();
   class Middleware1 {
     message() {
-      calledFirst = true;
+      m1();
     }
   }
   class Middleware2 {
     message() {
-      calledSecond = true;
+      m2();
     }
   }
   const bot = new HelperBot("pass");
   bot.use(new Middleware1()).use(new Middleware2());
 
-  t.is(calledFirst, false);
-  t.is(calledSecond, false);
+  t.is(m1.called, false);
+  t.is(m2.called, false);
   bot.message();
-  t.is(calledFirst, true);
-  t.is(calledSecond, true);
+  t.is(m2.called, true);
+  t.is(m2.called, true);
 });
 
 test("calling bot.voiceStateUpdate calls the voiceStateUpdate method on each middleware", t => {
-  let calledFirst = false;
-  let calledSecond = false;
+  const m1 = s.fake();
+  const m2 = s.fake();
   class Middleware1 {
     voiceStateUpdate() {
-      calledFirst = true;
+      m1();
     }
   }
   class Middleware2 {
     voiceStateUpdate() {
-      calledSecond = true;
+      m2();
     }
   }
   const bot = new HelperBot("pass");
   bot.use(new Middleware1()).use(new Middleware2());
 
-  t.is(calledFirst, false);
-  t.is(calledSecond, false);
+  t.is(m1.called, false);
+  t.is(m2.called, false);
   bot.voiceStateUpdate();
-  t.is(calledFirst, true);
-  t.is(calledSecond, true);
+  t.is(m2.called, true);
+  t.is(m2.called, true);
 });
 
 test("calling the kill argument will prevent any further middlewares being run", t => {
-  let calledFirst = false;
-  let calledSecond = false;
+  const m1 = s.fake();
+  const m2 = s.fake();
   class Middleware1 {
     message(msg, state, kill) {
-      calledFirst = true;
+      m1();
       kill();
     }
   }
   class Middleware2 {
     message() {
-      calledSecond = true;
+      m2();
     }
   }
   const bot = new HelperBot("pass");
   bot.use(new Middleware1()).use(new Middleware2());
 
-  t.is(calledFirst, false);
-  t.is(calledSecond, false);
+  t.is(m1.called, false);
+  t.is(m2.called, false);
   bot.message();
-  t.is(calledFirst, true);
-  t.is(calledSecond, false);
+  t.is(m1.called, true);
+  t.is(m2.called, false);
 });
 
 test("state is maintained between middleware calls", t => {
-  t.fail(); // Add a proper mocking library like jest has
+  t.plan(2);
+  let m1State;
+
+  class Middleware1 {
+    message(msg, state) {
+      m1State = state;
+      state.passedM1 = true;
+    }
+  }
+
+  class Middleware2 {
+    message(msg, state) {
+      t.is(state, m1State);
+      t.is(state.passedM1, true);
+    }
+  }
+
+  const bot = new HelperBot("pass");
+  bot
+    .use(new Middleware1())
+    .use(new Middleware2())
+    .message();
 });
