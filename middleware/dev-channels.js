@@ -4,7 +4,7 @@ class DevChannels {
     this.message = this.message.bind(this);
   }
 
-  message(msg, state, kill) {
+  message(msg, state) {
     if (this.devChannels.includes(msg.channel.name)) {
       state.devChannel = true;
     }

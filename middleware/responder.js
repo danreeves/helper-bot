@@ -15,7 +15,7 @@ class Responder {
         : noMatcher;
   }
 
-  message(msg, state, kill) {
+  message(msg) {
     if (this.matcher(msg.content)) {
       if (typeof this.response === "function") {
         this.response(msg);

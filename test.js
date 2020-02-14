@@ -1,7 +1,7 @@
 import test from "ava";
 import s from "sinon";
 import { Client } from "discord.js";
-import HelperBot from "./index";
+import HelperBot from ".";
 
 test("HelperBot assigns the discord client to this.bot", t => {
   const bot = new HelperBot("password");

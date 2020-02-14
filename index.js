@@ -26,13 +26,13 @@ class HelperBot {
 
   voiceStateUpdate() {
     this.middlewares.forEach(
-      mw => mw.voiceStateUpdate && mw.voiceStateUpdate(/* what goes here */)
+      mw => mw.voiceStateUpdate && mw.voiceStateUpdate(/* what goes here */),
     );
   }
 
   message(msg) {
-    let state = {
-      bot: this.bot
+    const state = {
+      bot: this.bot,
     };
 
     let shouldRun = true;
@@ -42,7 +42,7 @@ class HelperBot {
     }
 
     this.middlewares.forEach(
-      mw => shouldRun && mw.message && mw.message(msg, state, kill)
+      mw => shouldRun && mw.message && mw.message(msg, state, kill),
     );
   }
 }

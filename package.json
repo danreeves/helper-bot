@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "scripts": {
     "start": "node index.js",
-    "test": "ava -v"
+    "test": "xo && ava -v",
+    "fix": "xo --fix && prettier --write **/*.js"
   },
   "dependencies": {
     "discord.js": "^11.5.1",
@@ -16,6 +17,16 @@
   "devDependencies": {
     "ava": "^2.3.0",
     "prettier": "^1.19.1",
-    "sinon": "^7.4.2"
+    "sinon": "^7.4.2",
+    "xo": "^0.26.1"
+  },
+  "prettier": {
+    "singleQuote": false,
+    "trailingComma": "all",
+    "bracketSpacing": true
+  },
+  "xo": {
+    "prettier": true,
+    "space": 2
   }
 }

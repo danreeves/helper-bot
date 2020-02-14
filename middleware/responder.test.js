@@ -1,16 +1,16 @@
 import test from "ava";
 import s from "sinon";
-import Responder from "./responder.js";
+import Responder from "./responder";
 
 test("it calls msg.reply if the msg.content matches (string)", t => {
-  let m = new Responder({
+  const m = new Responder({
     command: "ping",
-    response: "pong"
+    response: "pong",
   });
 
-  let msg = {
+  const msg = {
     content: "ping",
-    reply: s.fake()
+    reply: s.fake(),
   };
 
   m.message(msg);
@@ -20,14 +20,14 @@ test("it calls msg.reply if the msg.content matches (string)", t => {
 });
 
 test("it calls msg.reply if the msg.content matches (regex)", t => {
-  let m = new Responder({
+  const m = new Responder({
     command: /ping/,
-    response: "pong"
+    response: "pong",
   });
 
-  let msg = {
+  const msg = {
     content: "ping",
-    reply: s.fake()
+    reply: s.fake(),
   };
 
   m.message(msg);
@@ -37,15 +37,15 @@ test("it calls msg.reply if the msg.content matches (regex)", t => {
 });
 
 test("it calls response if it is a function", t => {
-  let response = s.fake();
-  let m = new Responder({
+  const response = s.fake();
+  const m = new Responder({
     command: "ping",
-    response
+    response,
   });
 
-  let msg = {
+  const msg = {
     content: "ping",
-    reply: () => {}
+    reply: () => {},
   };
 
   m.message(msg);
