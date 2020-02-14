@@ -1,4 +1,4 @@
-class DevMode {
+class DevChannels {
   constructor(devChannels) {
     this.devChannels = devChannels;
     this.message = this.message.bind(this);
@@ -6,9 +6,9 @@ class DevMode {
 
   message(msg, state, kill) {
     if (this.devChannels.includes(msg.channel.name)) {
-      state.devMode = true;
+      state.devChannel = true;
     }
   }
 }
 
-module.exports = DevMode;
+module.exports = DevChannels;

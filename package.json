@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "scripts": {
     "start": "node index.js",
-    "test": "ava"
+    "test": "ava -v"
   },
   "dependencies": {
     "discord.js": "^11.5.1",
@@ -11,10 +11,11 @@
     "lodash": "^4.17.15"
   },
   "engines": {
-    "node": "8.6.0"
+    "node": "12.10.0"
   },
   "devDependencies": {
     "ava": "^2.3.0",
+    "prettier": "^1.19.1",
     "sinon": "^7.4.2"
   }
 }
