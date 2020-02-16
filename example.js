@@ -1,5 +1,3 @@
-require("dotenv").config();
-
 const HelperBot = require("./src/helper-bot");
 
 const DevChannels = require("./src/middleware/dev-channels");

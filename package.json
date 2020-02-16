@@ -1,15 +1,18 @@
 {
   "name": "helper-bot",
   "version": "0.0.1",
+  "main": "index.js",
+  "authors": [
+    "Dan Reeves <hey@danreev.es>",
+    "Dan Lewis <dantheorange@googlemail.com>"
+  ],
   "scripts": {
     "start": "node index.js",
     "test": "xo && ava -v",
     "fix": "xo --fix && prettier --write **/*.js"
   },
   "dependencies": {
-    "discord.js": "^11.5.1",
-    "dotenv": "^8.1.0",
-    "lodash": "^4.17.15"
+    "discord.js": "^11.5.1"
   },
   "engines": {
     "node": "12.10.0"
