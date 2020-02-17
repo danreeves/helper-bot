@@ -2,17 +2,26 @@ const { Client } = require("discord.js");
 
 class HelperBot {
   constructor(discordBotToken) {
+    // Instance state
     this.bot = new Client();
     this.botToken = discordBotToken;
     this.middlewares = [];
 
+    // Bound instance methods
     this.start = this.start.bind(this);
     this.use = this.use.bind(this);
-    this.voiceStateUpdate = this.voiceStateUpdate.bind(this);
-    this.message = this.message.bind(this);
+    this.dispatcher = this.dispatcher.bind(this);
 
-    this.bot.on("voiceStateUpdate", this.voiceStateUpdate);
-    this.bot.on("message", this.message);
+    // Bot event listeners
+    this.bot.on("voiceStateUpdate", this.dispatcher("voiceStateUpdate"));
+    this.bot.on("message", this.dispatcher("message"));
+    this.bot.on("messageReactionAdd", this.dispatcher("reactionAdd"));
+    this.bot.on("messageReactionRemove", this.dispatcher("reactionRemove"));
+
+    this.bot.on("ready", () => {
+      const initMiddleware = this.dispatcher("init");
+      initMiddleware(this.bot);
+    });
   }
 
   start() {
@@ -24,26 +33,22 @@ class HelperBot {
     return this;
   }
 
-  voiceStateUpdate() {
-    this.middlewares.forEach(
-      mw => mw.voiceStateUpdate && mw.voiceStateUpdate(/* what goes here */),
-    );
-  }
+  dispatcher(eventName) {
+    return (...args) => {
+      const state = {
+        bot: this.bot,
+      };
 
-  message(msg) {
-    const state = {
-      bot: this.bot,
+      let shouldRun = true;
+
+      function kill() {
+        shouldRun = false;
+      }
+
+      this.middlewares.forEach(
+        mw => shouldRun && mw[eventName] && mw[eventName](...args, state, kill),
+      );
     };
-
-    let shouldRun = true;
-
-    function kill() {
-      shouldRun = false;
-    }
-
-    this.middlewares.forEach(
-      mw => shouldRun && mw.message && mw.message(msg, state, kill),
-    );
   }
 }
 
