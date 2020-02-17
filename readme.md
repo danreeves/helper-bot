@@ -1,10 +1,10 @@
-# Discord Helper Bot 🤖
+# Helper Bot 🤖
 
-A simple Discord bot that is designed to help people, or hinder certain people. It's subjective.
+A framework around [Discord.js](https://discord.js.org) for implementing simple bot behaviour in bite-sized chunks.
 
 ## The code
 
-Check out `server.js` to see how it works ✨
+Check out `index.js` to see how it works ✨. It's really quite simple, so it might be better to read `example.js` and the provided middlewares to see how to use it.
 
 ## References
 
