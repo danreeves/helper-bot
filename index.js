@@ -13,10 +13,11 @@ class HelperBot {
     this.dispatcher = this.dispatcher.bind(this);
 
     // Bot event listeners
-    this.bot.on("voiceStateUpdate", this.dispatcher("voiceStateUpdate"));
+    this.bot.on("guildMemberAdd", this.dispatcher("userJoin"));
     this.bot.on("message", this.dispatcher("message"));
     this.bot.on("messageReactionAdd", this.dispatcher("reactionAdd"));
     this.bot.on("messageReactionRemove", this.dispatcher("reactionRemove"));
+    this.bot.on("voiceStateUpdate", this.dispatcher("voiceStateUpdate"));
 
     this.bot.on("ready", () => {
       const initMiddleware = this.dispatcher("init");
