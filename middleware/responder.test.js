@@ -5,12 +5,12 @@ import Responder from "./responder";
 test("it calls msg.reply if the msg.content matches (string)", t => {
   const m = new Responder({
     command: "ping",
-    response: "pong",
+    response: "pong"
   });
 
   const msg = {
     content: "ping",
-    reply: s.fake(),
+    reply: s.fake()
   };
 
   m.message(msg);
@@ -22,12 +22,12 @@ test("it calls msg.reply if the msg.content matches (string)", t => {
 test("it calls msg.reply if the msg.content matches (regex)", t => {
   const m = new Responder({
     command: /ping/,
-    response: "pong",
+    response: "pong"
   });
 
   const msg = {
     content: "ping",
-    reply: s.fake(),
+    reply: s.fake()
   };
 
   m.message(msg);
@@ -40,12 +40,12 @@ test("it calls response if it is a function", t => {
   const response = s.fake();
   const m = new Responder({
     command: "ping",
-    response,
+    response
   });
 
   const msg = {
     content: "ping",
-    reply: () => {},
+    reply: () => {}
   };
 
   m.message(msg);
